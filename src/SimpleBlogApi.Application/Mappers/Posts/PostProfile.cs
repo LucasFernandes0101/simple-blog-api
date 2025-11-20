@@ -15,6 +15,8 @@ public class PostProfile : Profile
         CreateMap<CreatePostResult, CreatePostResponseDTO>().ReverseMap();
         CreateMap<GetPostResponseDTO, GetPostResult>().ReverseMap();
         CreateMap<GetPostCommand, GetPostRequestDTO>().ReverseMap();
+        CreateMap<Post, GetPostDetailResult>().ReverseMap();
+        CreateMap<GetPostDetailResult, GetPostDetailResponseDTO>().ReverseMap();
 
         CreateMap<Post, GetPostResult>()
             .ForMember(dest => dest.CommentCount,

@@ -39,6 +39,27 @@ public class PostsController(IMediator mediator) : ControllerBase
     }
 
     /// <summary>
+    /// Retrieves detailed information about a post by its ID, including its comments.
+    /// </summary>
+    /// <param name="id">The post identifier.</param>
+    /// <returns>The detailed information of the post, including its comments.</returns>
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(GetPostDetailResponseDTO), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<GetPostDetailResponseDTO>> GetAsync(
+        [FromRoute] int id)
+    {
+        var command = new GetPostDetailCommand(id);
+
+        var post = await mediator.Send(command);
+
+        if (post is null)
+            return NotFound();
+
+        return Ok(post.ToDTO());
+    }
+
+    /// <summary>
     /// Creates a new post.
     /// </summary>
     /// <param name="dto">The post data for creating a new post.</param>

@@ -16,7 +16,7 @@ public class PostRepository : BaseRepository<Post>, IPostRepository
         _context = context;
     }
 
-    public async Task<Post?> GetWithCommentsByIdAsync(
+    public async Task<Post?> GetByIdWithCommentsAsync(
         int id,
         CancellationToken cancellationToken = default)
         => await _context.Posts

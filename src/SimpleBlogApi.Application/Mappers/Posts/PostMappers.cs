@@ -31,4 +31,10 @@ public static class PostMappers
 
     public static CreatePostResult ToCreateResult(this Post entity)
         => _mapper.Map<CreatePostResult>(entity);
+
+    public static GetPostDetailResult ToDetailResult(this Post entity)
+        => _mapper.Map<GetPostDetailResult>(entity);
+
+    public static GetPostDetailResponseDTO ToDTO(this GetPostDetailResult result)
+        => _mapper.Map<GetPostDetailResponseDTO>(result);
 }
