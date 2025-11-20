@@ -19,7 +19,7 @@ public class GetPostHandler(
     {
         await ValidateAsync(command, cancellationToken);
 
-        var pagedResult = await postRepository.GetAsync(
+        var pagedResult = await postRepository.GetWithCommentsAsync(
             command.Page,
             command.Size,
             default,

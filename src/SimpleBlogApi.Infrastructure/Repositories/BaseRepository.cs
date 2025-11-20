@@ -17,14 +17,14 @@ public abstract class BaseRepository<T>(
         CancellationToken cancellationToken = default)
     {
         page = page == 0 ? 1 : page;
-        int count = (page - 1) * maxResults;
+        var count = (page - 1) * maxResults;
 
-        IQueryable<T> query = context.Set<T>().AsQueryable();
+        var query = context.Set<T>().AsQueryable();
 
         if (criteria is not null)
             query = query.Where(criteria);
 
-        var totalRecords = await query.CountAsync();
+        var totalRecords = await query.CountAsync(cancellationToken);
 
         var items = await query.Skip(count)
                                .Take(maxResults)
