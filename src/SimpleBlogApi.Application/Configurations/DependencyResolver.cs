@@ -1,8 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using SimpleBlogApi.Application.Commands.Posts;
+using SimpleBlogApi.Application.Mappers.Posts;
+using SimpleBlogApi.Application.Validators.Posts;
 using SimpleBlogApi.Domain.Interfaces.Repositories;
 using SimpleBlogApi.Infrastructure.Contexts;
 using SimpleBlogApi.Infrastructure.Repositories;
+using System.Net.ServerSentEvents;
 using System.Reflection;
 
 namespace SimpleBlogApi.Application.Configurations;
@@ -13,6 +18,7 @@ public static class DependencyResolver
         this IServiceCollection services)
     {
         services.ResolveRepositories();
+        services.ResolveValidators();
         services.ResolveMediatR();
 
         return services;
@@ -35,6 +41,18 @@ public static class DependencyResolver
 
         services.AddScoped<IPostRepository, PostRepository>();
         services.AddScoped<ICommentRepository, CommentRepository>();
+    }
+
+    private static void ResolveValidators(this IServiceCollection services)
+    {
+        #region Validators Posts
+        services.AddScoped<IValidator<CreatePostCommand>, CreatePostCommandValidator>();
+        #endregion
+    }
+
+    private static void ResolveAutoMapper(this IServiceCollection services)
+    {
+        services.AddAutoMapper(typeof(PostProfile));
     }
 
     private static void ResolveMediatR(this IServiceCollection services)
