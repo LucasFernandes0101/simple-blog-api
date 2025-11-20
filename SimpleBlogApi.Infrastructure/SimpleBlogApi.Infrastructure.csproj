@@ -7,12 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Commands\" />
-    <Folder Include="Handlers\" />
-    <Folder Include="Mappers\" />
-    <Folder Include="Validators\" />
-    <Folder Include="Results\" />
+    <Folder Include="Configurations\Builders\" />
+    <Folder Include="Contexts\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>
