@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Configs/">
+    <File Path="Dockerfile" />
+  </Folder>
+  <Project Path="src/SimpleBlogApi.Application/SimpleBlogApi.Application.csproj" Id="46e8ca59-ce4b-449a-a87d-87f21fd99d9f" />
+  <Project Path="src/SimpleBlogApi/SimpleBlogApi.csproj" />
+</Solution>
