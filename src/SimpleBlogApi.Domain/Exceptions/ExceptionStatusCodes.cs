@@ -6,6 +6,7 @@ public static class ExceptionStatusCodes
 {
     private static Dictionary<Type, HttpStatusCode> exceptionsStatusCodes = new()
     {
+        {typeof(PostNotFoundException), HttpStatusCode.NotFound},
     };
 
     public static HttpStatusCode GetExceptionStatusCode(Exception exception)

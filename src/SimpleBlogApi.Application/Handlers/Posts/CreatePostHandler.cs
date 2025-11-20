@@ -29,7 +29,8 @@ public class CreatePostHandler(
     }
 
     private async Task ValidateAsync(
-        CreatePostCommand command, CancellationToken cancellationToken)
+        CreatePostCommand command, 
+        CancellationToken cancellationToken)
     {
         var validation = await validator.ValidateAsync(
             command, 

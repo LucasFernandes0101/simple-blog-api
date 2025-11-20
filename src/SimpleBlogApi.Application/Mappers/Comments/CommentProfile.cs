@@ -10,6 +10,7 @@ public class CommentProfile : Profile
     public CommentProfile()
     {
         CreateMap<Comment, GetCommentResult>();
+        CreateMap<Comment, CreateCommentResult>();
         CreateMap<GetCommentResult, GetCommentResponseDTO>();
     }
 }

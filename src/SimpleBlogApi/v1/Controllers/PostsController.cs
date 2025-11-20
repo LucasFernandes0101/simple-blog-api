@@ -1,10 +1,13 @@
 ﻿using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SimpleBlogApi.Application.Commands.Comments;
 using SimpleBlogApi.Application.Commands.Posts;
+using SimpleBlogApi.Application.DTOs.Comments;
 using SimpleBlogApi.Application.DTOs.Common;
 using SimpleBlogApi.Application.DTOs.Posts;
 using SimpleBlogApi.Application.Extensions;
+using SimpleBlogApi.Application.Mappers.Comments;
 using SimpleBlogApi.Application.Mappers.Posts;
 
 namespace SimpleBlogApi.v1.Controllers;
@@ -71,6 +74,27 @@ public class PostsController(IMediator mediator) : ControllerBase
         [FromBody] CreatePostRequestDTO dto)
     {
         var result = await mediator.Send(dto.ToCommand());
+
+        return Created(string.Empty, result.ToDTO());
+    }
+
+    /// <summary>
+    /// Creates a new comment on a post.
+    /// </summary>
+    /// <param name="dto">The comment data for creating a new comment.</param>
+    [HttpPost("{id}/comments")]
+    [ProducesResponseType(typeof(CreatePostResponseDTO), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ErrorResponseDTO), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<CreatePostResponseDTO>> PostCommentAsync(
+        [FromRoute] int id,
+        [FromBody] CreateCommentRequestDTO dto)
+    {
+        var command = new CreateCommentCommand(
+            id,
+            dto.Content,
+            dto.Author);
+
+        var result = await mediator.Send(command);
 
         return Created(string.Empty, result.ToDTO());
     }
