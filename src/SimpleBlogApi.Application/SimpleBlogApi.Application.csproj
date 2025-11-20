@@ -15,4 +15,13 @@
     <Folder Include="Results\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="13.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SimpleBlogApi.Infrastructure\SimpleBlogApi.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
