@@ -6,8 +6,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5141",
-      "SQLSERVER_CONNECTION_STRING": "Server=(localdb)\\MSSQLLocalDB;Database=SimpleBlogDb;Trusted_Connection=True;MultipleActiveResultSets=true",
+      "applicationUrl": "http://localhost:5141"
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json"

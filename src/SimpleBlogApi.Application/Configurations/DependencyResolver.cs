@@ -22,6 +22,11 @@ public static class DependencyResolver
     {
         var connectionString = Environment.GetEnvironmentVariable("SQLSERVER_CONNECTION_STRING");
 
+        ArgumentNullException.ThrowIfNull(
+            connectionString, 
+            "Environment variable 'SQLSERVER_CONNECTION_STRING' is not set."
+        );
+
         services.AddDbContext<BlogDbContext>(_ =>
             _.UseSqlServer(
                 connectionString, 
