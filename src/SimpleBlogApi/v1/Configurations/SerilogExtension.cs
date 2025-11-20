@@ -9,7 +9,9 @@ public static class SerilogExtension
     private static readonly LogEventLevel _defaultLogLevel = LogEventLevel.Information;
     private static readonly LoggingLevelSwitch _loggingLevel = new();
 
-    public static IServiceCollection AddLoggingSerilog(this IServiceCollection services, LoggerConfiguration logger)
+    public static IServiceCollection AddLoggingSerilog(
+        this IServiceCollection services, 
+        LoggerConfiguration logger)
     {
         LoadLogLevel();
         ConfigureLog(logger);

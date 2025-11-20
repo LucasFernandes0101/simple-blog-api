@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FluentValidation;
+using SimpleBlogApi.Application.DTOs.Common;
+using SimpleBlogApi.Domain.Base;
+using SimpleBlogApi.Domain.Exceptions;
 using System.Text.Json;
 
 namespace SimpleBlogApi.v1.Middlewares;
@@ -34,7 +37,7 @@ public class ExceptionMiddleware(
             _ => CreateGenericErrorResponseDTO(ex)
         };
 
-        var result = await JsonSerializer.SerializeAsync(errorResponse);
+        var result = JsonSerializer.Serialize(errorResponse);
 
         await context.Response.WriteAsync(result);
     }

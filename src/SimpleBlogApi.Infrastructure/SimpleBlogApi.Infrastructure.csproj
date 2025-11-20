@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\SimpleBlogApi.Domain\SimpleBlogApi.Domain.csproj" />
+    <ProjectReference Include="..\SimpleBlogApi.Domain\SimpleBlogApi.Domain.csproj" />
   </ItemGroup>
 
 </Project>
