@@ -2,7 +2,7 @@
 
 namespace SimpleBlogApi.v1.Configurations;
 
-public static class SwaggerExtensions
+public static class SwaggerExtension
 {
     public static IServiceCollection AddSwaggerConfig(this IServiceCollection services)
     {

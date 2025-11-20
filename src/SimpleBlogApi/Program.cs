@@ -5,12 +5,14 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog();
-
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddSwaggerConfig();
+
+builder.Services.AddLoggingSerilog(new LoggerConfiguration());
+
+builder.Services.AddLogging(c => c.ClearProviders());
 
 builder.Services.AddCustomApiVersioning();
 
