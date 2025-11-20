@@ -8,7 +8,7 @@ public class CreatePostCommandValidator
 {
     public CreatePostCommandValidator()
     {
-        RuleFor(_ => _.Title).NotEmpty().Length(3, 200);
-        RuleFor(_ => _.Content).NotEmpty();
+        RuleFor(_ => _.Title).NotEmpty().Length(3, 200).WithMessage("The title should be between 3 and 200 characters.");
+        RuleFor(_ => _.Content).NotEmpty().WithMessage("The content cannot be empty.");
     }
 }

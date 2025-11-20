@@ -8,13 +8,22 @@ namespace SimpleBlogApi.Application.Mappers.Posts;
 
 public static class PostMappers
 {
-    private static readonly IMapper _mapper = new MapperConfiguration(cfg =>
-        cfg.AddProfile<PostProfile>()).CreateMapper();
+    private static readonly IMapper _mapper = new MapperConfiguration(_ =>
+        _.AddProfile<PostProfile>()).CreateMapper();
 
     public static CreatePostCommand ToCommand(this CreatePostRequestDTO dto)
         => _mapper.Map<CreatePostCommand>(dto);
 
-    public static CreatePostResponseDTO ToPostResponse(this CreatePostResult result)
+    public static GetPostCommand ToCommand(this GetPostRequestDTO dto)
+        => _mapper.Map<GetPostCommand>(dto);
+
+    public static List<GetPostResponseDTO> ToDTO(this List<GetPostResult> results)
+        => _mapper.Map<List<GetPostResponseDTO>>(results);
+
+    public static List<GetPostResult> ToResult(this List<Post> entites)
+        => _mapper.Map<List<GetPostResult>>(entites);
+
+    public static CreatePostResponseDTO ToDTO(this CreatePostResult result)
         => _mapper.Map<CreatePostResponseDTO>(result);
 
     public static Post ToEntity(this CreatePostCommand command)

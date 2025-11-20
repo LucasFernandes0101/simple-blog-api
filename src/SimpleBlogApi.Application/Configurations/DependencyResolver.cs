@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleBlogApi.Application.Commands.Posts;
+using SimpleBlogApi.Application.Mappers.Comments;
 using SimpleBlogApi.Application.Mappers.Posts;
 using SimpleBlogApi.Application.Validators.Posts;
 using SimpleBlogApi.Domain.Interfaces.Repositories;
@@ -53,6 +54,7 @@ public static class DependencyResolver
     private static void ResolveAutoMapper(this IServiceCollection services)
     {
         services.AddAutoMapper(typeof(PostProfile));
+        services.AddAutoMapper(typeof(CommentProfile));
     }
 
     private static void ResolveMediatR(this IServiceCollection services)
