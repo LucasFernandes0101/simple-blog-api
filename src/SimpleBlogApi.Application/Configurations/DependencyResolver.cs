@@ -2,11 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleBlogApi.Application.Commands.Comments;
-using SimpleBlogApi.Application.Commands.Posts;
+using SimpleBlogApi.Application.Commands.BlogPosts;
 using SimpleBlogApi.Application.Mappers.Comments;
-using SimpleBlogApi.Application.Mappers.Posts;
+using SimpleBlogApi.Application.Mappers.BlogPosts;
 using SimpleBlogApi.Application.Validators.Comments;
-using SimpleBlogApi.Application.Validators.Posts;
+using SimpleBlogApi.Application.Validators.BlogPosts;
 using SimpleBlogApi.Domain.Interfaces.Repositories;
 using SimpleBlogApi.Infrastructure.Contexts;
 using SimpleBlogApi.Infrastructure.Repositories;
@@ -48,9 +48,9 @@ public static class DependencyResolver
 
     private static void ResolveValidators(this IServiceCollection services)
     {
-        services.AddScoped<IValidator<CreatePostCommand>, CreateBlogPostCommandValidator>();
-        services.AddScoped<IValidator<GetPostCommand>, GetBlogPostCommandValidator>();
-        services.AddScoped<IValidator<GetPostDetailCommand>, GetBlogPostDetailCommandValidator>();
+        services.AddScoped<IValidator<CreateBlogPostCommand>, CreateBlogPostCommandValidator>();
+        services.AddScoped<IValidator<GetBlogPostCommand>, GetBlogPostCommandValidator>();
+        services.AddScoped<IValidator<GetBlogPostDetailCommand>, GetBlogPostDetailCommandValidator>();
         services.AddScoped<IValidator<CreateCommentCommand>, CreateCommentCommandValidator>();
     }
 

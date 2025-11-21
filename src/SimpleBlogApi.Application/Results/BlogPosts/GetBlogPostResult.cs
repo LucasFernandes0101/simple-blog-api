@@ -1,4 +1,4 @@
-﻿namespace SimpleBlogApi.Application.Results.Posts;
+﻿namespace SimpleBlogApi.Application.Results.BlogPosts;
 
 public record GetBlogPostResult
 {

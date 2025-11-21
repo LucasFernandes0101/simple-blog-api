@@ -1,19 +1,19 @@
 ﻿using FluentValidation;
 using MediatR;
-using SimpleBlogApi.Application.Commands.Posts;
-using SimpleBlogApi.Application.Mappers.Posts;
-using SimpleBlogApi.Application.Results.Posts;
+using SimpleBlogApi.Application.Commands.BlogPosts;
+using SimpleBlogApi.Application.Mappers.BlogPosts;
+using SimpleBlogApi.Application.Results.BlogPosts;
 using SimpleBlogApi.Domain.Interfaces.Repositories;
 
-namespace SimpleBlogApi.Application.Handlers.Posts;
+namespace SimpleBlogApi.Application.Handlers.BlogPosts;
 
 public class GetBlogPostDetailHandler(
     IBlogPostRepository postRepository,
-    IValidator<GetPostDetailCommand> validator)
-    : IRequestHandler<GetPostDetailCommand, GetBlogPostDetailResult?>
+    IValidator<GetBlogPostDetailCommand> validator)
+    : IRequestHandler<GetBlogPostDetailCommand, GetBlogPostDetailResult?>
 {
     public async Task<GetBlogPostDetailResult?> Handle(
-        GetPostDetailCommand command, 
+        GetBlogPostDetailCommand command, 
         CancellationToken cancellationToken)
     {
         await ValidateAsync(command, cancellationToken);
@@ -27,7 +27,7 @@ public class GetBlogPostDetailHandler(
     }
 
     private async Task ValidateAsync(
-        GetPostDetailCommand command,
+        GetBlogPostDetailCommand command,
         CancellationToken cancellationToken)
     {
         var validation = await validator.ValidateAsync(

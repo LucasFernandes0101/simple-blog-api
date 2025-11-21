@@ -1,4 +1,4 @@
-﻿namespace SimpleBlogApi.Application.DTOs.Posts;
+﻿namespace SimpleBlogApi.Application.DTOs.BlogPosts;
 
 public record GetBlogPostResponseDTO(
     int Id,

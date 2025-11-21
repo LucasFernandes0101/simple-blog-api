@@ -1,6 +1,6 @@
 ﻿using SimpleBlogApi.Application.Results.Comments;
 
-namespace SimpleBlogApi.Application.Results.Posts;
+namespace SimpleBlogApi.Application.Results.BlogPosts;
 
 public record GetBlogPostDetailResult(
     int Id,

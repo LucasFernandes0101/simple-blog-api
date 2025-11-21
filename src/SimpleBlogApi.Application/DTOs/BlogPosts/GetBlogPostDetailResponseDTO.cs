@@ -1,6 +1,6 @@
 ﻿using SimpleBlogApi.Application.DTOs.Comments;
 
-namespace SimpleBlogApi.Application.DTOs.Posts;
+namespace SimpleBlogApi.Application.DTOs.BlogPosts;
 
 public record GetBlogPostDetailResponseDTO
 {

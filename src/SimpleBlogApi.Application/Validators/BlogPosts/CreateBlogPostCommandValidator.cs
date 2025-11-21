@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using SimpleBlogApi.Application.Commands.Posts;
+using SimpleBlogApi.Application.Commands.BlogPosts;
 
-namespace SimpleBlogApi.Application.Validators.Posts;
+namespace SimpleBlogApi.Application.Validators.BlogPosts;
 
 public class CreateBlogPostCommandValidator
-    : AbstractValidator<CreatePostCommand>
+    : AbstractValidator<CreateBlogPostCommand>
 {
     public CreateBlogPostCommandValidator()
     {

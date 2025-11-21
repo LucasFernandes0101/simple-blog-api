@@ -1,23 +1,23 @@
 ﻿using AutoMapper;
-using SimpleBlogApi.Application.Commands.Posts;
+using SimpleBlogApi.Application.Commands.BlogPosts;
 using SimpleBlogApi.Application.DTOs.Comments;
-using SimpleBlogApi.Application.DTOs.Posts;
+using SimpleBlogApi.Application.DTOs.BlogPosts;
 using SimpleBlogApi.Application.Results.Comments;
-using SimpleBlogApi.Application.Results.Posts;
+using SimpleBlogApi.Application.Results.BlogPosts;
 using SimpleBlogApi.Domain.Entities;
 
-namespace SimpleBlogApi.Application.Mappers.Posts;
+namespace SimpleBlogApi.Application.Mappers.BlogPosts;
 
 public class BlogPostProfile : Profile
 {
     public BlogPostProfile()
     {
-        CreateMap<BlogPost, CreatePostCommand>().ReverseMap();
+        CreateMap<BlogPost, CreateBlogPostCommand>().ReverseMap();
         CreateMap<BlogPost, CreateBlogPostResult>().ReverseMap();
-        CreateMap<CreatePostCommand, CreateBlogPostRequestDTO>().ReverseMap();
+        CreateMap<CreateBlogPostCommand, CreateBlogPostRequestDTO>().ReverseMap();
         CreateMap<CreateBlogPostResult, CreateBlogPostResponseDTO>().ReverseMap();
         CreateMap<GetBlogPostResponseDTO, GetBlogPostResult>().ReverseMap();
-        CreateMap<GetPostCommand, GetBlogPostRequestDTO>().ReverseMap();
+        CreateMap<GetBlogPostCommand, GetBlogPostRequestDTO>().ReverseMap();
         CreateMap<BlogPost, GetBlogPostDetailResult>().ReverseMap();
         CreateMap<GetBlogPostDetailResult, GetBlogPostDetailResponseDTO>().ReverseMap();
         CreateMap<GetCommentResult, GetCommentResponseDTO>().ReverseMap();

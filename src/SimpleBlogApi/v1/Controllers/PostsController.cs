@@ -2,13 +2,13 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SimpleBlogApi.Application.Commands.Comments;
-using SimpleBlogApi.Application.Commands.Posts;
+using SimpleBlogApi.Application.Commands.BlogPosts;
 using SimpleBlogApi.Application.DTOs.Comments;
 using SimpleBlogApi.Application.DTOs.Common;
-using SimpleBlogApi.Application.DTOs.Posts;
+using SimpleBlogApi.Application.DTOs.BlogPosts;
 using SimpleBlogApi.Application.Extensions;
 using SimpleBlogApi.Application.Mappers.Comments;
-using SimpleBlogApi.Application.Mappers.Posts;
+using SimpleBlogApi.Application.Mappers.BlogPosts;
 
 namespace SimpleBlogApi.v1.Controllers;
 
@@ -52,7 +52,7 @@ public class PostsController(IMediator mediator) : ControllerBase
     public async Task<ActionResult<GetBlogPostDetailResponseDTO>> GetAsync(
         [FromRoute] int id)
     {
-        var command = new GetPostDetailCommand(id);
+        var command = new GetBlogPostDetailCommand(id);
 
         var post = await mediator.Send(command);
 
