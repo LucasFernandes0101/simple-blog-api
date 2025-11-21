@@ -3,5 +3,5 @@
   <Project Path="src/SimpleBlogApi.Domain/SimpleBlogApi.Domain.csproj" Id="829f1e2f-1dd0-4eb7-afdb-51667439b908" />
   <Project Path="src/SimpleBlogApi.Infrastructure/SimpleBlogApi.Infrastructure.csproj" Id="5c699316-8852-4f40-aa7b-87729fcec899" />
   <Project Path="src/SimpleBlogApi/SimpleBlogApi.csproj" />
-  <Project Path="tests/SimpleBlogApi.UnitTests/SimpleBlogApi.UnitTests.csproj" Id="8cfb5e4d-c6fe-4cd0-8757-dd745ce01ba3" />
+  <Project Path="tests/SimpleBlogApi.Tests/SimpleBlogApi.Tests.csproj" Id="8cfb5e4d-c6fe-4cd0-8757-dd745ce01ba3" />
 </Solution>

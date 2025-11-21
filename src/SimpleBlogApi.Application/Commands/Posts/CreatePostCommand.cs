@@ -5,4 +5,4 @@ namespace SimpleBlogApi.Application.Commands.Posts;
 
 public record CreatePostCommand(
     string Title,
-    string Content) : IRequest<CreatePostResult>;
+    string Content) : IRequest<CreateBlogPostResult>;

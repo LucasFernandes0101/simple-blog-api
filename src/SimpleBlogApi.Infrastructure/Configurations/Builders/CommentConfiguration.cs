@@ -22,8 +22,8 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
         builder.Property(c => c.CreatedAt)
             .IsRequired();
 
-        builder.HasOne(c => c.Post)
+        builder.HasOne(c => c.BlogPost)
             .WithMany(p => p.Comments)
-            .HasForeignKey(c => c.PostId);
+            .HasForeignKey(c => c.BlogPostId);
     }
 }

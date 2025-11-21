@@ -2,6 +2,6 @@
 
 namespace SimpleBlogApi.Domain.Exceptions;
 
-public class PostNotFoundException(string message) : BaseException(message)
+public class BlogPostNotFoundException(string message) : BaseException(message)
 {
 }

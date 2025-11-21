@@ -6,4 +6,4 @@ namespace SimpleBlogApi.Application.Commands.Posts;
 
 public record GetPostCommand(
     int Page,
-    int Size) : IRequest<PagedResult<GetPostResult>>;
+    int Size) : IRequest<PagedResult<GetBlogPostResult>>;

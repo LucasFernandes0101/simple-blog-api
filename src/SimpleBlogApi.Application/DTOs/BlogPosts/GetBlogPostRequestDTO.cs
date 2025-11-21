@@ -2,4 +2,4 @@
 
 namespace SimpleBlogApi.Application.DTOs.Posts;
 
-public record GetPostRequestDTO : PagedRequestDTO;
+public record GetBlogPostRequestDTO : PagedRequestDTO;

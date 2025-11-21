@@ -12,7 +12,7 @@ using SimpleBlogApi.Infrastructure.Contexts;
 namespace SimpleBlogApi.Infrastructure.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20251120204911_InitialCreate")]
+    [Migration("20251121020750_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,37 +25,7 @@ namespace SimpleBlogApi.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SimpleBlogApi.Domain.Entities.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("Comments", (string)null);
-                });
-
-            modelBuilder.Entity("SimpleBlogApi.Domain.Entities.Post", b =>
+            modelBuilder.Entity("SimpleBlogApi.Domain.Entities.BlogPost", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -77,21 +47,51 @@ namespace SimpleBlogApi.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Posts", (string)null);
+                    b.ToTable("BlogPosts", (string)null);
                 });
 
             modelBuilder.Entity("SimpleBlogApi.Domain.Entities.Comment", b =>
                 {
-                    b.HasOne("SimpleBlogApi.Domain.Entities.Post", "Post")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("BlogPostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogPostId");
+
+                    b.ToTable("Comments", (string)null);
+                });
+
+            modelBuilder.Entity("SimpleBlogApi.Domain.Entities.Comment", b =>
+                {
+                    b.HasOne("SimpleBlogApi.Domain.Entities.BlogPost", "BlogPost")
                         .WithMany("Comments")
-                        .HasForeignKey("PostId")
+                        .HasForeignKey("BlogPostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Post");
+                    b.Navigation("BlogPost");
                 });
 
-            modelBuilder.Entity("SimpleBlogApi.Domain.Entities.Post", b =>
+            modelBuilder.Entity("SimpleBlogApi.Domain.Entities.BlogPost", b =>
                 {
                     b.Navigation("Comments");
                 });

@@ -2,7 +2,7 @@
 
 namespace SimpleBlogApi.Application.Results.Posts;
 
-public record GetPostDetailResult(
+public record GetBlogPostDetailResult(
     int Id,
     string Title,
     string Content,

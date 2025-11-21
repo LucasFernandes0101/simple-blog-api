@@ -42,21 +42,21 @@ public static class DependencyResolver
                 _ => _.CommandTimeout(180))
             .EnableSensitiveDataLogging(true));
 
-        services.AddScoped<IPostRepository, PostRepository>();
+        services.AddScoped<IBlogPostRepository, PostRepository>();
         services.AddScoped<ICommentRepository, CommentRepository>();
     }
 
     private static void ResolveValidators(this IServiceCollection services)
     {
-        services.AddScoped<IValidator<CreatePostCommand>, CreatePostCommandValidator>();
-        services.AddScoped<IValidator<GetPostCommand>, GetPostCommandValidator>();
-        services.AddScoped<IValidator<GetPostDetailCommand>, GetPostDetailCommandValidator>();
+        services.AddScoped<IValidator<CreatePostCommand>, CreateBlogPostCommandValidator>();
+        services.AddScoped<IValidator<GetPostCommand>, GetBlogPostCommandValidator>();
+        services.AddScoped<IValidator<GetPostDetailCommand>, GetBlogPostDetailCommandValidator>();
         services.AddScoped<IValidator<CreateCommentCommand>, CreateCommentCommandValidator>();
     }
 
     private static void ResolveAutoMapper(this IServiceCollection services)
     {
-        services.AddAutoMapper(typeof(PostProfile));
+        services.AddAutoMapper(typeof(BlogPostProfile));
         services.AddAutoMapper(typeof(CommentProfile));
     }
 

@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace SimpleBlogApi.Infrastructure.Repositories;
 
-public class PostRepository : BaseRepository<Post>, IPostRepository
+public class PostRepository : BaseRepository<BlogPost>, IBlogPostRepository
 {
     private readonly BlogDbContext _context;
     public PostRepository(BlogDbContext context) 
@@ -16,23 +16,23 @@ public class PostRepository : BaseRepository<Post>, IPostRepository
         _context = context;
     }
 
-    public async Task<Post?> GetByIdWithCommentsAsync(
+    public async Task<BlogPost?> GetByIdWithCommentsAsync(
         int id,
         CancellationToken cancellationToken = default)
-        => await _context.Posts
+        => await _context.BlogPosts
             .Include(p => p.Comments)
             .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 
-    public async Task<PagedResult<Post>> GetWithCommentsAsync(
+    public async Task<PagedResult<BlogPost>> GetWithCommentsAsync(
         int page = 1,
         int maxResults = 10,
-        Expression<Func<Post, bool>>? criteria = default,
+        Expression<Func<BlogPost, bool>>? criteria = default,
         CancellationToken cancellationToken = default)
     {
         page = page == 0 ? 1 : page;
         var count = (page - 1) * maxResults;
 
-        var query = _context.Posts.AsQueryable();
+        var query = _context.BlogPosts.AsQueryable();
 
         if (criteria is not null)
             query = query.Where(criteria);
@@ -45,6 +45,6 @@ public class PostRepository : BaseRepository<Post>, IPostRepository
                                .Include(p => p.Comments)
                                .ToListAsync(cancellationToken);
 
-        return new PagedResult<Post>(totalRecords, items);
+        return new PagedResult<BlogPost>(totalRecords, items);
     }
 }

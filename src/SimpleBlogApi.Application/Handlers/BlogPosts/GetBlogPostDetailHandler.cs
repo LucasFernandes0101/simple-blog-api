@@ -3,37 +3,32 @@ using MediatR;
 using SimpleBlogApi.Application.Commands.Posts;
 using SimpleBlogApi.Application.Mappers.Posts;
 using SimpleBlogApi.Application.Results.Posts;
-using SimpleBlogApi.Domain.Base;
 using SimpleBlogApi.Domain.Interfaces.Repositories;
 
 namespace SimpleBlogApi.Application.Handlers.Posts;
 
-public class GetPostHandler(
-    IPostRepository postRepository,
-    IValidator<GetPostCommand> validator)
-    : IRequestHandler<GetPostCommand, PagedResult<GetPostResult>>
+public class GetBlogPostDetailHandler(
+    IBlogPostRepository postRepository,
+    IValidator<GetPostDetailCommand> validator)
+    : IRequestHandler<GetPostDetailCommand, GetBlogPostDetailResult?>
 {
-    public async Task<PagedResult<GetPostResult>> Handle(
-        GetPostCommand command, 
+    public async Task<GetBlogPostDetailResult?> Handle(
+        GetPostDetailCommand command, 
         CancellationToken cancellationToken)
     {
         await ValidateAsync(command, cancellationToken);
 
-        var pagedResult = await postRepository.GetWithCommentsAsync(
-            command.Page,
-            command.Size,
-            default,
+        var post = await postRepository.GetByIdWithCommentsAsync(
+            command.Id,
             cancellationToken
         );
 
-        return new PagedResult<GetPostResult>(
-            pagedResult.Total,
-            pagedResult.Items.ToResult()
-        );
+        return post?.ToDetailResult();
     }
 
     private async Task ValidateAsync(
-        GetPostCommand command, CancellationToken cancellationToken)
+        GetPostDetailCommand command,
+        CancellationToken cancellationToken)
     {
         var validation = await validator.ValidateAsync(
             command,

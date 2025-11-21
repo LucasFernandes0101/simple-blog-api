@@ -23,17 +23,17 @@ public class PostsController(IMediator mediator) : ControllerBase
     /// <param name="request">The request containing filters for retrieving posts.</param>
     /// <returns>A paged response containing a list of posts.</returns>
     [HttpGet]
-    [ProducesResponseType(typeof(PagedResponseDTO<GetPostResponseDTO>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PagedResponseDTO<GetBlogPostResponseDTO>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<ActionResult<PagedResponseDTO<GetPostResponseDTO>>> GetAsync(
-        [FromQuery] GetPostRequestDTO request)
+    public async Task<ActionResult<PagedResponseDTO<GetBlogPostResponseDTO>>> GetAsync(
+        [FromQuery] GetBlogPostRequestDTO request)
     {
         var result = await mediator.Send(request.ToCommand());
 
         if (!result.Items.AnySafe())
             return NoContent();
 
-        return Ok(new PagedResponseDTO<GetPostResponseDTO>(
+        return Ok(new PagedResponseDTO<GetBlogPostResponseDTO>(
             result.Items.ToDTO(),
             result.Total,
             request.Page,
@@ -47,9 +47,9 @@ public class PostsController(IMediator mediator) : ControllerBase
     /// <param name="id">The post identifier.</param>
     /// <returns>The detailed information of the post, including its comments.</returns>
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(GetPostDetailResponseDTO), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GetBlogPostDetailResponseDTO), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<GetPostDetailResponseDTO>> GetAsync(
+    public async Task<ActionResult<GetBlogPostDetailResponseDTO>> GetAsync(
         [FromRoute] int id)
     {
         var command = new GetPostDetailCommand(id);
@@ -68,10 +68,10 @@ public class PostsController(IMediator mediator) : ControllerBase
     /// <param name="dto">The post data for creating a new post.</param>
     /// <returns>The created post Id.</returns>
     [HttpPost]
-    [ProducesResponseType(typeof(CreatePostResponseDTO), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(CreateBlogPostResponseDTO), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorResponseDTO), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<CreatePostResponseDTO>> PostAsync(
-        [FromBody] CreatePostRequestDTO dto)
+    public async Task<ActionResult<CreateBlogPostResponseDTO>> PostAsync(
+        [FromBody] CreateBlogPostRequestDTO dto)
     {
         var result = await mediator.Send(dto.ToCommand());
 
@@ -83,9 +83,9 @@ public class PostsController(IMediator mediator) : ControllerBase
     /// </summary>
     /// <param name="dto">The comment data for creating a new comment.</param>
     [HttpPost("{id}/comments")]
-    [ProducesResponseType(typeof(CreatePostResponseDTO), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(CreateBlogPostResponseDTO), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorResponseDTO), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<CreatePostResponseDTO>> PostCommentAsync(
+    public async Task<ActionResult<CreateBlogPostResponseDTO>> PostCommentAsync(
         [FromRoute] int id,
         [FromBody] CreateCommentRequestDTO dto)
     {

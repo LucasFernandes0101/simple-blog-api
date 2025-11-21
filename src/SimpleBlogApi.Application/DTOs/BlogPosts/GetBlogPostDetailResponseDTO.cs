@@ -2,7 +2,7 @@
 
 namespace SimpleBlogApi.Application.DTOs.Posts;
 
-public record GetPostDetailResponseDTO
+public record GetBlogPostDetailResponseDTO
 {
     public int Id { get; init; }
     public string Title { get; init; } = string.Empty;

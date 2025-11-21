@@ -4,11 +4,11 @@ using SimpleBlogApi.Domain.Entities;
 
 namespace SimpleBlogApi.Infrastructure.Configurations.Builders;
 
-public class PostConfiguration : IEntityTypeConfiguration<Post>
+public class BlogPostConfiguration : IEntityTypeConfiguration<BlogPost>
 {
-    public void Configure(EntityTypeBuilder<Post> builder)
+    public void Configure(EntityTypeBuilder<BlogPost> builder)
     {
-        builder.ToTable("Posts");
+        builder.ToTable("BlogPosts");
 
         builder.HasKey(p => p.Id);
 
@@ -23,7 +23,7 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
             .IsRequired();
 
         builder.HasMany(p => p.Comments)
-            .WithOne(c => c.Post)
-            .HasForeignKey(c => c.PostId);
+            .WithOne(c => c.BlogPost)
+            .HasForeignKey(c => c.BlogPostId);
     }
 }

@@ -10,7 +10,7 @@ namespace SimpleBlogApi.Application.Handlers.Comments;
 
 public class CreateCommentHandler(
     ICommentRepository commentRepository,
-    IPostRepository postRepository,
+    IBlogPostRepository postRepository,
     IValidator<CreateCommentCommand> validator)
     : IRequestHandler<CreateCommentCommand, CreateCommentResult>
 {
@@ -42,14 +42,14 @@ public class CreateCommentHandler(
         if (!validation.IsValid)
             throw new ValidationException(validation.Errors);
 
-        await EnsurePostExists(command.PostId, cancellationToken);
+        await EnsurePostExists(command.BlogPostId, cancellationToken);
     }
 
-    private async Task EnsurePostExists(int postId, CancellationToken cancellationToken)
+    private async Task EnsurePostExists(int blogBlogPostId, CancellationToken cancellationToken)
     {
-        var post = await postRepository.GetByIdAsync(postId, cancellationToken);
+        var post = await postRepository.GetByIdAsync(blogBlogPostId, cancellationToken);
 
         if (post is null)
-            throw new PostNotFoundException($"Post with ID {postId} not found.");
+            throw new BlogPostNotFoundException($"Post with ID {blogBlogPostId} not found.");
     }
 }

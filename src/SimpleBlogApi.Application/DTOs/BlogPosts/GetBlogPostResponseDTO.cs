@@ -1,6 +1,6 @@
 ﻿namespace SimpleBlogApi.Application.DTOs.Posts;
 
-public record GetPostResponseDTO(
+public record GetBlogPostResponseDTO(
     int Id,
     string Title,
     string Content,

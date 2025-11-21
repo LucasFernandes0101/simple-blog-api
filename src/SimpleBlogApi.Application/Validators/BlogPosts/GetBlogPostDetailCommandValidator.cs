@@ -3,10 +3,10 @@ using SimpleBlogApi.Application.Commands.Posts;
 
 namespace SimpleBlogApi.Application.Validators.Posts;
 
-public class GetPostDetailCommandValidator
+public class GetBlogPostDetailCommandValidator
     : AbstractValidator<GetPostDetailCommand>
 {
-    public GetPostDetailCommandValidator()
+    public GetBlogPostDetailCommandValidator()
     {
         RuleFor(_ => _.Id)
         .GreaterThan(0)

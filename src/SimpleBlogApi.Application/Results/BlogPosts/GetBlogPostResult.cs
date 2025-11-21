@@ -1,8 +1,8 @@
 ﻿namespace SimpleBlogApi.Application.Results.Posts;
 
-public record GetPostResult
+public record GetBlogPostResult
 {
-    public GetPostResult() { }
+    public GetBlogPostResult() { }
 
     public int Id { get; init; }
     public string Title { get; init; } = string.Empty;

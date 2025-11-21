@@ -7,31 +7,33 @@ using SimpleBlogApi.Domain.Interfaces.Repositories;
 
 namespace SimpleBlogApi.Application.Handlers.Posts;
 
-public class GetPostDetailHandler(
-    IPostRepository postRepository,
-    IValidator<GetPostDetailCommand> validator)
-    : IRequestHandler<GetPostDetailCommand, GetPostDetailResult?>
+public class CreateBlogPostHandler(
+    IBlogPostRepository postRepository,
+    IValidator<CreatePostCommand> validator) 
+    : IRequestHandler<CreatePostCommand, CreateBlogPostResult>
 {
-    public async Task<GetPostDetailResult?> Handle(
-        GetPostDetailCommand command, 
+    public async Task<CreateBlogPostResult> Handle(
+        CreatePostCommand command, 
         CancellationToken cancellationToken)
     {
         await ValidateAsync(command, cancellationToken);
 
-        var post = await postRepository.GetByIdWithCommentsAsync(
-            command.Id,
+        var post = command.ToEntity();
+
+        var createdPost = await postRepository.AddAsync(
+            post, 
             cancellationToken
         );
 
-        return post?.ToDetailResult();
+        return createdPost.ToCreateResult();
     }
 
     private async Task ValidateAsync(
-        GetPostDetailCommand command,
+        CreatePostCommand command, 
         CancellationToken cancellationToken)
     {
         var validation = await validator.ValidateAsync(
-            command,
+            command, 
             cancellationToken
         );
 

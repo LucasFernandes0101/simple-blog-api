@@ -1,6 +1,6 @@
 ﻿namespace SimpleBlogApi.Application.DTOs.Posts;
 
-public record CreatePostRequestDTO(
+public record CreateBlogPostRequestDTO(
     string Title,
     string Content
 );

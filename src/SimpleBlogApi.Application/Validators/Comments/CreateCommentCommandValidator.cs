@@ -7,9 +7,9 @@ public class CreateCommentCommandValidator : AbstractValidator<CreateCommentComm
 {
     public CreateCommentCommandValidator()
     {
-        RuleFor(x => x.PostId)
+        RuleFor(x => x.BlogPostId)
             .GreaterThan(0)
-            .WithMessage("PostId must be a positive integer.");
+            .WithMessage("BlogPostId must be a positive integer.");
 
         RuleFor(x => x.Content)
             .NotEmpty()
