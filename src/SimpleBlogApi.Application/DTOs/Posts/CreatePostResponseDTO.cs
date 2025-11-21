@@ -1,3 +1,3 @@
 ﻿namespace SimpleBlogApi.Application.DTOs.Posts;
 
-public class CreatePostResponseDTO(int Id);
+public record CreatePostResponseDTO(int Id);

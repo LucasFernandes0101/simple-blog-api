@@ -1,5 +1,7 @@
 ﻿namespace SimpleBlogApi.Application.DTOs.Comments;
 
 public record GetCommentResponseDTO(
+    int Id,
     string Content,
-    string Author);
+    string Author,
+    DateTimeOffset CreatedAt);

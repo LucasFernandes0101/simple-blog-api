@@ -2,8 +2,11 @@
 
 namespace SimpleBlogApi.Application.DTOs.Posts;
 
-public record GetPostDetailResponseDTO(
-    int Id,
-    string Title,
-    string Content,
-    List<GetCommentResponseDTO> Comments);
+public record GetPostDetailResponseDTO
+{
+    public int Id { get; init; }
+    public string Title { get; init; } = string.Empty;
+    public string Content { get; init; } = string.Empty;
+    public List<GetCommentResponseDTO> Comments { get; init; } = new();
+    public DateTimeOffset CreatedAt { get; init; }
+}

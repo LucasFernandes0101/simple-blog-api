@@ -1,6 +1,4 @@
-﻿using SimpleBlogApi.Application.DTOs.Comments;
-
-namespace SimpleBlogApi.Application.DTOs.Posts;
+﻿namespace SimpleBlogApi.Application.DTOs.Posts;
 
 public record GetPostResponseDTO(
     int Id,

@@ -6,4 +6,5 @@ public record GetPostDetailResult(
     int Id,
     string Title,
     string Content,
-    List<GetCommentResult> Comments);
+    List<GetCommentResult> Comments,
+    DateTimeOffset CreatedAt);

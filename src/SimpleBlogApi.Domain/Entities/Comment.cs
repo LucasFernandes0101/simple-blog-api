@@ -8,5 +8,5 @@ public class Comment : BaseEntity
     public string Author { get; set; } = string.Empty;
     public int PostId { get; set; }
 
-    public virtual Post Post { get; set; } = default!;
+    public virtual Post Post { get; set; } = default;
 }
