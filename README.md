@@ -108,6 +108,7 @@ README.md
         "id": 1,
         "title": "Hello World",
         "content": "This is my first post",
+        "commentCount": 33,
         "createdAt": "2025-11-20T22:00:00Z"
       }
     ]
