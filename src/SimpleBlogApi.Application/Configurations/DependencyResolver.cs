@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleBlogApi.Application.Commands.Comments;
@@ -7,6 +8,7 @@ using SimpleBlogApi.Application.Mappers.Comments;
 using SimpleBlogApi.Application.Mappers.BlogPosts;
 using SimpleBlogApi.Application.Validators.Comments;
 using SimpleBlogApi.Application.Validators.BlogPosts;
+using SimpleBlogApi.Application.Behaviors;
 using SimpleBlogApi.Domain.Interfaces.Repositories;
 using SimpleBlogApi.Infrastructure.Contexts;
 using SimpleBlogApi.Infrastructure.Repositories;
@@ -61,6 +63,10 @@ public static class DependencyResolver
     }
 
     private static void ResolveMediatR(this IServiceCollection services)
-     => services.AddMediatR(cfg => 
+    {
+        services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+    }
 }

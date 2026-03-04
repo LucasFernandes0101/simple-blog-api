@@ -1,6 +1,4 @@
 ﻿using FluentAssertions;
-using FluentValidation;
-using FluentValidation.Results;
 using NSubstitute;
 using Shouldly;
 using SimpleBlogApi.Application.Commands.BlogPosts;
@@ -9,7 +7,6 @@ using SimpleBlogApi.Domain.Base;
 using SimpleBlogApi.Domain.Entities;
 using SimpleBlogApi.Domain.Interfaces.Repositories;
 using SimpleBlogApi.Tests.Mocks.Entities;
-using System.Linq.Expressions;
 
 namespace SimpleBlogApi.Tests.Handlers.BlogPosts;
 
@@ -24,10 +21,6 @@ public class GetBlogPostHandlerTests
 
         var command = new GetBlogPostCommand(1, 10);
 
-        var validator = Substitute.For<IValidator<GetBlogPostCommand>>();
-        validator.ValidateAsync(command, cancellationToken)
-            .Returns(Task.FromResult(new ValidationResult()));
-
         var postRepository = Substitute.For<IBlogPostRepository>();
         postRepository.GetWithCommentsAsync(command.Page, command.Size, default, cancellationToken)
             .Returns(Task.FromResult(new PagedResult<BlogPost>(
@@ -35,7 +28,7 @@ public class GetBlogPostHandlerTests
                 fakePosts
             )));
 
-        var handler = new GetBlogPostHandler(postRepository, validator);
+        var handler = new GetBlogPostHandler(postRepository);
 
         // Act
         var result = await handler.Handle(command, cancellationToken);
@@ -53,38 +46,6 @@ public class GetBlogPostHandlerTests
             result.Items[i].CommentCount.ShouldBe(fakePosts[i].Comments.Count);
         }
 
-        await validator.Received(1).ValidateAsync(command, cancellationToken);
         await postRepository.Received(1).GetWithCommentsAsync(command.Page, command.Size, default, cancellationToken);
-    }
-
-    [Fact(DisplayName = "Handle should throw ValidationException when command is invalid")]
-    public async Task Handle_ShouldThrowValidationException_WhenCommandIsInvalid()
-    {
-        // Arrange
-        var cancellationToken = CancellationToken.None;
-        var command = new GetBlogPostCommand(0, 0);
-
-        var validationFailures = new[]
-        {
-            new ValidationFailure("Page", "Page must be greater than 0"),
-            new ValidationFailure("Size", "Size must be greater than 0")
-        };
-
-        var validator = Substitute.For<IValidator<GetBlogPostCommand>>();
-        validator.ValidateAsync(command, cancellationToken)
-            .Returns(Task.FromResult(new ValidationResult(validationFailures)));
-
-        var postRepository = Substitute.For<IBlogPostRepository>();
-        var handler = new GetBlogPostHandler(postRepository, validator);
-
-        // Act
-        var act = async () => await handler.Handle(command, cancellationToken);
-
-        // Assert
-        await act.Should().ThrowAsync<ValidationException>()
-            .Where(ex => ex.Errors.Count() == validationFailures.Length);
-
-        await validator.Received(1).ValidateAsync(command, cancellationToken);
-        await postRepository.DidNotReceive().GetWithCommentsAsync(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<Expression<Func<BlogPost, bool>>>(), cancellationToken);
     }
 }

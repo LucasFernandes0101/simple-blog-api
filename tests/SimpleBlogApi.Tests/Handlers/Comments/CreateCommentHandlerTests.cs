@@ -1,6 +1,4 @@
 ﻿using FluentAssertions;
-using FluentValidation;
-using FluentValidation.Results;
 using NSubstitute;
 using SimpleBlogApi.Application.Commands.Comments;
 using SimpleBlogApi.Application.Handlers.Comments;
@@ -26,10 +24,6 @@ public class CreateCommentHandlerTests
             fakeComment.Content,
             fakeComment.Author);
 
-        var validator = Substitute.For<IValidator<CreateCommentCommand>>();
-        validator.ValidateAsync(command, cancellationToken)
-            .Returns(Task.FromResult(new ValidationResult()));
-
         var postRepository = Substitute.For<IBlogPostRepository>();
         postRepository.GetByIdAsync(fakePost.Id, cancellationToken)
             .Returns(Task.FromResult(fakePost));
@@ -38,7 +32,7 @@ public class CreateCommentHandlerTests
         commentRepository.AddAsync(Arg.Any<Comment>(), cancellationToken)
             .Returns(Task.FromResult(fakeComment));
 
-        var handler = new CreateCommentHandler(commentRepository, postRepository, validator);
+        var handler = new CreateCommentHandler(commentRepository, postRepository);
 
         // Act
         var result = await handler.Handle(command, cancellationToken);
@@ -47,42 +41,8 @@ public class CreateCommentHandlerTests
         result.Should().NotBeNull();
         result.Id.Should().Be(fakeComment.Id);
 
-        await validator.Received(1).ValidateAsync(command, cancellationToken);
         await postRepository.Received(1).GetByIdAsync(fakePost.Id, cancellationToken);
         await commentRepository.Received(1).AddAsync(Arg.Any<Comment>(), cancellationToken);
-    }
-
-    [Fact(DisplayName = "Handle should throw ValidationException when command is invalid")]
-    public async Task Handle_ShouldThrowValidationException_WhenCommandIsInvalid()
-    {
-        // Arrange
-        var cancellationToken = CancellationToken.None;
-        var command = new CreateCommentCommand(0, string.Empty, string.Empty);
-
-        var validationFailures = new[]
-        {
-            new ValidationFailure("BlogPostId", "BlogPostId must be greater than 0"),
-            new ValidationFailure("Content", "Content is required")
-        };
-
-        var validator = Substitute.For<IValidator<CreateCommentCommand>>();
-        validator.ValidateAsync(command, cancellationToken)
-            .Returns(Task.FromResult(new ValidationResult(validationFailures)));
-
-        var postRepository = Substitute.For<IBlogPostRepository>();
-        var commentRepository = Substitute.For<ICommentRepository>();
-        var handler = new CreateCommentHandler(commentRepository, postRepository, validator);
-
-        // Act
-        var act = async () => await handler.Handle(command, cancellationToken);
-
-        // Assert
-        await act.Should().ThrowAsync<ValidationException>()
-            .Where(ex => ex.Errors.Count() == validationFailures.Length);
-
-        await validator.Received(1).ValidateAsync(command, cancellationToken);
-        await postRepository.DidNotReceive().GetByIdAsync(Arg.Any<int>(), cancellationToken);
-        await commentRepository.DidNotReceive().AddAsync(Arg.Any<Comment>(), cancellationToken);
     }
 
     [Fact(DisplayName = "Handle should throw BlogPostNotFoundException when post does not exist")]
@@ -95,16 +55,12 @@ public class CreateCommentHandlerTests
             "Test comment",
             "Test author");
 
-        var validator = Substitute.For<IValidator<CreateCommentCommand>>();
-        validator.ValidateAsync(command, cancellationToken)
-            .Returns(Task.FromResult(new ValidationResult()));
-
         var postRepository = Substitute.For<IBlogPostRepository>();
         postRepository.GetByIdAsync(command.BlogPostId, cancellationToken)
             .Returns(Task.FromResult<BlogPost?>(null));
 
         var commentRepository = Substitute.For<ICommentRepository>();
-        var handler = new CreateCommentHandler(commentRepository, postRepository, validator);
+        var handler = new CreateCommentHandler(commentRepository, postRepository);
 
         // Act
         var act = async () => await handler.Handle(command, cancellationToken);
@@ -113,7 +69,6 @@ public class CreateCommentHandlerTests
         await act.Should().ThrowAsync<BlogPostNotFoundException>()
             .WithMessage($"Post with ID {command.BlogPostId} not found.");
 
-        await validator.Received(1).ValidateAsync(command, cancellationToken);
         await postRepository.Received(1).GetByIdAsync(command.BlogPostId, cancellationToken);
         await commentRepository.DidNotReceive().AddAsync(Arg.Any<Comment>(), cancellationToken);
     }
